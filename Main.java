@@ -40,7 +40,6 @@ public class Main {
 
         System.out.println();
 
-
         System.out.println("Отсортированный по фамилии список потенциально работоспособных людей с высшим образованием в выборке (т.е. людей с высшим образованием от 18 до 60 лет для женщин и до 65 лет для мужчин");
         List<String> result2 = persons.stream()
                 .filter(people -> people.getEducation().equals(Education.HIGHER))
@@ -51,6 +50,5 @@ public class Main {
                 .sorted(naturalOrder())
                 .collect(Collectors.toList());
         System.out.println(result2);
-
     }
 }
