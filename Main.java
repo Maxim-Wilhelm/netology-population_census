@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.naturalOrder;
 
@@ -39,20 +40,17 @@ public class Main {
 
         System.out.println();
 
+
         System.out.println("Отсортированный по фамилии список потенциально работоспособных людей с высшим образованием в выборке (т.е. людей с высшим образованием от 18 до 60 лет для женщин и до 65 лет для мужчин");
-        List<String> resultTwo;
-        resultTwo = persons.stream()
-                .filter(peopleHigherEducation -> peopleHigherEducation.getAge() > 18)
-                .filter(peopleHigherEducation -> peopleHigherEducation.getAge() <= 60)
-                .filter(peopleHigherEducation -> peopleHigherEducation.getSex().equals(Sex.WOMAN))
-                .filter(peopleHigherEducation -> peopleHigherEducation.getEducation().equals(Education.HIGHER))
-                .filter(peopleHigherEducation -> peopleHigherEducation.getSex().equals(Sex.WOMAN) & peopleHigherEducation.getEducation().equals(Education.HIGHER) & peopleHigherEducation.getAge() > 18)
-                .filter(peopleHigherEducation -> peopleHigherEducation.getSex().equals(Sex.WOMAN) & peopleHigherEducation.getEducation().equals(Education.HIGHER) & peopleHigherEducation.getAge() <= 60)
-                .filter(peopleHigherEducation -> peopleHigherEducation.getSex().equals(Sex.MAN) & peopleHigherEducation.getEducation().equals(Education.HIGHER) & peopleHigherEducation.getAge() > 18)
-                .filter(peopleHigherEducation -> peopleHigherEducation.getSex().equals(Sex.MAN) & peopleHigherEducation.getEducation().equals(Education.HIGHER) & peopleHigherEducation.getAge() <= 65)
+        List<String> result2 = persons.stream()
+                .filter(people -> people.getEducation().equals(Education.HIGHER))
+                .filter(people -> people.getAge() > 18)
+                .filter(people -> (people.getSex().equals(Sex.WOMAN) && people.getAge() < 60)
+                        || (people.getSex().equals(Sex.MAN) && people.getAge() < 65))
                 .map(Person::getFamily)
                 .sorted(naturalOrder())
                 .collect(Collectors.toList());
-        System.out.println(resultTwo);
+        System.out.println(result2);
+
     }
 }
